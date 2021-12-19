@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "This is the backend part of Railway Reservation System",
+  "main": "app.js",
+  "engines": {
+    "node": "14.17.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=production HOST=localhost USER=root PASSWORD=Umeprisur12@ DB=railway PORT=8080 JWT_SECRET_KEY=thisisthesupersecretkeyforthetokenswhichnooneshouldbeabletoguess node app.js",
+    "start:dev": "nodemon app.js"
+  },
+  "author": "Umesh",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
+    "express-validator": "^6.14.0",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
