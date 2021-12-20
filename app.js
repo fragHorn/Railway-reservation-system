@@ -4,11 +4,10 @@ const bookingRoutes = require("./routes/booking");
 const authenticationRoutes = require("./routes/authentication");
 const createTables = require("./database/create-tables");
 const bodyParser = require("body-parser");
-const helmet = require('helmet');
+require('dotenv').config();
+
 //initialize the express app
 const app = express();
-
-app.use(helmet());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Content-Allow-Origin', '*');
