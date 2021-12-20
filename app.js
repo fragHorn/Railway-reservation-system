@@ -2,7 +2,7 @@ const express = require("express");
 const trainRoutes = require("./routes/station");
 const bookingRoutes = require("./routes/booking");
 const authenticationRoutes = require("./routes/authentication");
-const createTables = require("./database/create-tables");
+const createTablesMid = require('./middleware/createTables')
 const bodyParser = require("body-parser");
 require('dotenv').config();
 
@@ -14,13 +14,6 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS, POST, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
-});
-
-app.use((req, res, next) => {
-  createTables.userTable();
-  createTables.createBookings();
-  createTables.trainStationTable();
-  next();
 });
 
 //to parse the incoming requests
@@ -39,4 +32,4 @@ app.use((error, req, res, next) => {
   res.status(errorStatus).json({ message: errorMessage, data: errorData });
 });
 
-app.listen(process.env.PORT || 8080);
+app.listen(process.env.PORT || 8080, createTablesMid);
