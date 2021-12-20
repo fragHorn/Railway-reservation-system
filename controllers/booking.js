@@ -1,6 +1,7 @@
 const TrainStation = require('../models/train-station');
 const Booking = require("../models/booking");
 const { validationResult } = require("express-validator");
+const DateTrain = require('../models/date-train');
 
 exports.postBookTrain = (req, res, next) => {
   const errors = validationResult(req);
@@ -14,6 +15,7 @@ exports.postBookTrain = (req, res, next) => {
   const fromStationCode = req.body.fromStation;
   const toStationCode = req.body.toStation;
   const noOfPassengers = Number(req.body.noOfPassengers);
+  const date = req.body.date;
   const userId = req.userId;
   let cost;
   // console.log(trainId, fromStationCode, toStationCode);
@@ -29,6 +31,9 @@ exports.postBookTrain = (req, res, next) => {
               const {arrival_time, departure_time, train_fare} = trainDetails;
               cost = train_fare * noOfPassengers;
               new Booking(fromStationCode, toStationCode, noOfPassengers, trainId, userId, cost, arrival_time, departure_time)
+              .then( () => {
+                return DateTrain.updateSeats(date, noOfPassengers, trainId)
+              })
               .then( () => {
                 res.status(201).json({message: "Train booked successfully!!"});
               })

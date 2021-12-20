@@ -53,11 +53,13 @@ exports.trainStationTable = () => {
        arrival_time time(6), 
        departure_time time(6), 
        train_id int, 
-       station_id varchar(255), 
+       fromStation_id varchar(255),
+       toStation_id varchar(255), 
        train_fare decimal, 
        primary key(id), 
        foreign key(train_id) references trains(train_no), 
-       foreign key(station_id) references station(station_code));`
+       foreign key(fromStation_id) references station(station_code),
+       foreign key(toStation_id) references station(station_code));`
   )
   // .then(() => {
   //   console.log("Train-station table created...");
@@ -91,7 +93,7 @@ exports.createTrainsTable = () => {
     `CREATE TABLE IF NOT EXISTS trains
      (train_no int not null, 
       train_name varchar(255),
-      no_of_seats int not null,
+      no_of_seats int,
       primary key(train_no));`
   )
   // .then(() => {
@@ -102,4 +104,16 @@ exports.createTrainsTable = () => {
   //    err.statusCode = 500;
   //   throw err;
   // });
+};
+
+exports.createDateTrainTable = () => {
+  return db.execute(
+    `CREATE TABLE IF NOT EXISTS dateTrain
+     (id int not null auto_increment,
+      trainDate date,
+      train_id int, 
+      no_of_seats int not null,
+      primary key(id),
+      foreign key(train_id) references trains(train_no));`
+  );
 };

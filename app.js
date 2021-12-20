@@ -23,6 +23,12 @@ app.use(bodyParser.json());
 app.use(trainRoutes);
 app.use(bookingRoutes);
 app.use("/authentication", authenticationRoutes);
+app.use("/", (req, res, next) => {
+  const error = new Error('Page not found!!!');
+  error.statusCode = 404;
+  throw error;
+});
+
 
 app.use((error, req, res, next) => {
   console.log(error);

@@ -1,5 +1,5 @@
 const createTables = require('../database/create-tables');
-const storeData = require('../middleware/store-data');
+const storeData = require('./store-data');
 
 module.exports = (req, res, next) => {
     createTables.createStationsTable()
@@ -7,6 +7,7 @@ module.exports = (req, res, next) => {
     .then( () => createTables.userTable())
     .then( () => createTables.createBookings())
     .then( () => createTables.trainStationTable())
+    .then( () => createTables.createDateTrainTable())
     .then(() => {
         console.log('created');
         storeData();
