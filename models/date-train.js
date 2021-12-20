@@ -43,4 +43,14 @@ module.exports = class DateTrain{
             return Promise.reject('Something bad happened...!!!');
         });
     }
+
+    static checkTrainAvailability(trainId, date){
+        return db.execute(
+            `SELECT * FROM
+             dateTrain
+             WHERE 
+             dateTrain.train_id = ${trainId} 
+             AND dateTrain.trainDate = "${date}";`
+        );
+    }
 };

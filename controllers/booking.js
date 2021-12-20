@@ -19,7 +19,7 @@ exports.postBookTrain = (req, res, next) => {
   const userId = req.userId;
   let cost;
   // console.log(trainId, fromStationCode, toStationCode);
-  Booking.checkTrainAvailability(trainId)
+  DateTrain.checkTrainAvailability(trainId, date)
     .then((result) => {
       const [trainInfo] = result[0];
       if (trainInfo) {
@@ -62,7 +62,7 @@ exports.postBookTrain = (req, res, next) => {
         }
       } 
       else{
-        const err = new Error('Oops train not found...!!');
+        const error = new Error('Oops train not found...!!');
         error.statusCode = 404;
         throw error;
       }
