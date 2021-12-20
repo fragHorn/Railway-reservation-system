@@ -23,7 +23,7 @@ router.post(
     body("password")
       .trim()
       .isLength({ min: 5 })
-      .withMessage("Enter longer password..."),
+      .withMessage("Enter longer password (> 5 length)..."),
     body("name")
       .trim()
       .not()

@@ -34,13 +34,13 @@ module.exports = class DateTrain{
                     );
                 })
                 .catch(err => {
-                    return Promise.reject('Something went wrong...!!')
+                    return Promise.reject('Train_id does not exists!!!');
                 });
             }
         })
         .catch(err => {
             console.log(err);
-            return Promise.reject('Something bad happened...!!!');
+            return Promise.reject('Either the date format or the train_id is wrong!!!');
         });
     }
 

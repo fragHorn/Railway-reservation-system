@@ -10,14 +10,6 @@ exports.userTable = () => {
       password varchar(255), 
       primary key(id));`
   )
-    // .then(() => {
-    //   console.log("Users table created Successfully...");
-    // })
-    // .catch((err) => {
-    //   if(!err.statusCode)
-    //    err.statusCode = 500;
-    //   throw err;
-    // });
 };
 
 exports.createBookings = () => {
@@ -36,14 +28,6 @@ exports.createBookings = () => {
        foreign key(train_id) references trains(train_no),
        foreign key(user_id) references users(id));`
   )
-  // .then(() => {
-  //   console.log("Bookings table created successfully...");
-  // })
-  // .catch((err) => {
-  //   if(!err.statusCode)
-  //     err.statusCode = 500;
-  //   throw err;
-  // });
 };
 
 exports.trainStationTable = () => {
@@ -61,14 +45,6 @@ exports.trainStationTable = () => {
        foreign key(fromStation_id) references station(station_code),
        foreign key(toStation_id) references station(station_code));`
   )
-  // .then(() => {
-  //   console.log("Train-station table created...");
-  // })
-  // .catch((err) => {
-  //   if(!err.statusCode)
-  //    err.statusCode = 500;
-  //   throw err;
-  // });
 };
 
 exports.createStationsTable = () => {
@@ -78,14 +54,6 @@ exports.createStationsTable = () => {
        station_name varchar(255),
        primary key(station_code));`
   )
-  // .then(() => {
-  //   console.log('Station table created successfull1...');
-  // })
-  // .catch(err => {
-  //   if(!err.statusCode)
-  //    err.statusCode = 500;
-  //   throw err;
-  // });
 };
 
 exports.createTrainsTable = () => {
@@ -96,14 +64,6 @@ exports.createTrainsTable = () => {
       no_of_seats int,
       primary key(train_no));`
   )
-  // .then(() => {
-  //   console.log('Trains table created successfully...');
-  // })
-  // .catch(err => {
-  //   if(!err.statusCode)
-  //    err.statusCode = 500;
-  //   throw err;
-  // });
 };
 
 exports.createDateTrainTable = () => {

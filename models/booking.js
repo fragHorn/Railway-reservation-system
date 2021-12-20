@@ -3,10 +3,24 @@ const db = require('../database/db');
 module.exports = class Booking{
     constructor(fromStation, toStation, noOfPassenger, trainId, userId, cost, arrival_time, departure_time){
         return db.execute(`INSERT INTO bookings
-        (from_station, to_station, no_of_passenger, cost, train_id, user_id, departure_time, arrival_time)
+           (from_station, 
+            to_station, 
+            no_of_passenger, 
+            cost, 
+            train_id, 
+            user_id,
+            departure_time, 
+            arrival_time)
             values
-            ("${fromStation}", "${toStation}", ${noOfPassenger}, ${cost}, ${trainId}, ${userId}, "${departure_time}", "${arrival_time}");
-        `);
+            ("${fromStation}", 
+             "${toStation}", 
+              ${noOfPassenger}, 
+              ${cost}, 
+              ${trainId}, 
+              ${userId}, 
+              "${departure_time}", 
+              "${arrival_time}");`
+        );
     }
 
     static checkTrainAvailability(trainId){
