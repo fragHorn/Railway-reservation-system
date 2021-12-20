@@ -5,7 +5,7 @@ exports.userTable = () => {
     `CREATE TABLE IF NOT EXISTS users 
      (id int auto_increment unique not null, 
       name varchar(50), 
-      mobile_no int, 
+      mobile_no varchar(20), 
       email_id varchar(255), 
       password varchar(255), 
       primary key(id));`
