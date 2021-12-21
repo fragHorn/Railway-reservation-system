@@ -22,7 +22,6 @@ exports.postSearchTrains = (req, res, next) => {
     const [toStationName, toStationCode] = toStation.split('-');
     TrainStation.getTrainsForStation(fromStationCode, toStationCode)
     .then(([trains]) => {
-        console.log(trains);
         res.status(201).json({
             trains: trains
         }); 

@@ -24,9 +24,10 @@ app.use(trainRoutes);
 app.use(bookingRoutes);
 app.use("/authentication", authenticationRoutes);
 app.use("/", (req, res, next) => {
-  const error = new Error('Page not found!!!');
-  error.statusCode = 404;
-  throw error;
+  res.status(404).json({
+    message: 'Page not found!!!'
+  }); 
+  next();
 });
 
 

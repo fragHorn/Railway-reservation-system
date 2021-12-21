@@ -19,23 +19,7 @@ module.exports = class DateTrain{
                 );
             }
             else{
-                return db.execute(
-                    `SELECT * FROM trains
-                     WHERE
-                     trains.train_no = ${trainId};`
-                )
-                .then(([train]) => {
-                    const seats = train[0].no_of_seats - noOfPassengers;
-                    return db.execute(
-                        `INSERT INTO dateTrain
-                         (trainDate, train_id, no_of_seats)
-                         VALUES
-                         ("${date}", ${trainId}, ${seats});`
-                    );
-                })
-                .catch(err => {
-                    return Promise.reject('Train_id does not exists!!!');
-                });
+                return Promise.reject('No such train found!!!');
             }
         })
         .catch(err => {
@@ -44,13 +28,47 @@ module.exports = class DateTrain{
         });
     }
 
-    static checkTrainAvailability(trainId, date){
+    static checkForSeats(trainId, noOfPassengers, date){
         return db.execute(
-            `SELECT * FROM
-             dateTrain
+            `SELECT * FROM dateTrain
              WHERE 
-             dateTrain.train_id = ${trainId} 
-             AND dateTrain.trainDate = "${date}";`
-        );
+             dateTrain.trainDate = "${date}" 
+             AND dateTrain.train_id = ${trainId};`
+        )
+        .then(([output]) => {
+            if(output.length === 0){
+                return db.execute(
+                    `SELECT * FROM trains
+                     WHERE
+                     trains.train_no = ${trainId};`
+                )
+                .then(([train]) => {
+                    if(train.length > 0){
+                        const seats = train[0].no_of_seats;
+                        return db.execute(
+                            `INSERT INTO dateTrain
+                             (trainDate, train_id, no_of_seats)
+                             VALUES
+                             ("${date}", ${trainId}, ${seats});`
+                        );   
+                    }
+                    else{
+                        return Promise.reject('Sorry, the train was not found!!!');
+                    }
+                })
+                .catch(err => Promise.reject('Sorry, the train was not found!!!'));
+            }
+            else{
+                if(output[0].no_of_seats >= noOfPassengers){
+                    return Promise.resolve('Ok');
+                }
+                else{
+                    return Promise.reject('No more seats available!!!');
+                }
+            }
+        })
+        .catch(err => {
+            return Promise.reject('Sorry the given train was not found!!!');
+        })
     }
 };

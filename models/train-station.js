@@ -21,7 +21,7 @@ module.exports = class TrainStation{
             WHERE 
             trainStation.fromStation_id = "${fromStationcode}" AND
             trainStation.toStation_id = "${toStationCode}" AND
-            trainStation.train_id = "${trainId}";
+            trainStation.train_id = ${trainId};
         `);
     }
 }
