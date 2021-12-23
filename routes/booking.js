@@ -12,6 +12,14 @@ router.post('/reserve-tickets', tokenAuthentication, [
         else
          return true;
     }),
+    body('date')
+    .custom( value => {
+        const date = new Date(Number(value.split('-')[0]), Number(value.split('-')[1])-1, Number(value.split('-')[2]), 23, 59, 59);
+        if(date.getTime() < (new Date()).getTime())
+            throw new Error('Trying to Time Travel, are you ???');
+        else 
+            return true;
+    })
 ], bookingController.postBookTrain);
 
 router.get('/show-journeys', tokenAuthentication, bookingController.getJourneys);
