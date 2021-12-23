@@ -5,7 +5,7 @@
 * First clone the repo from the link provided.
 * Now run **npm install** inside the project terminal
 * Now create a new file in the root directory of the project named **".env"**.
-* Intialize the following vairiables according to your system
+* Intialize the following variables according to your system
   * HOST=localhost
   * USER=your_username or root
   * PASSWORD=your_database_password
