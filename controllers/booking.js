@@ -43,7 +43,7 @@ exports.postBookTrain = (req, res, next) => {
           res.status(201).json({message: "Train booked successfully!!"});
         })
         .catch(err => {
-          const error = new Error('No more seats available');
+          const error = new Error('Sorry, No more seats available');
           err.statusCode = 409;
           next(error);
         });
