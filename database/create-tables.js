@@ -24,6 +24,7 @@ exports.createBookings = () => {
        user_id int, 
        departure_time time(6), 
        arrival_time time(6), 
+       journey_date date,
        primary key(id), 
        foreign key(train_id) references trains(train_no),
        foreign key(user_id) references users(id));`

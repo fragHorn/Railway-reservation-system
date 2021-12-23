@@ -1,7 +1,7 @@
 const db = require('../database/db');
 
 module.exports = class Booking{
-    constructor(fromStation, toStation, noOfPassenger, trainId, userId, cost, arrival_time, departure_time){
+    constructor(fromStation, toStation, noOfPassenger, trainId, userId, cost, arrival_time, departure_time, date){
         return db.execute(`INSERT INTO bookings
            (from_station, 
             to_station, 
@@ -10,7 +10,8 @@ module.exports = class Booking{
             train_id, 
             user_id,
             departure_time, 
-            arrival_time)
+            arrival_time,
+            journey_date)
             values
             ("${fromStation}", 
              "${toStation}", 
@@ -19,7 +20,9 @@ module.exports = class Booking{
               ${trainId}, 
               ${userId}, 
               "${departure_time}", 
-              "${arrival_time}");`
+              "${arrival_time}",
+              "${date}"
+              );`
         );
     }
 

@@ -35,7 +35,7 @@ exports.postBookTrain = (req, res, next) => {
         const [trainDetails] = train;
         const {arrival_time, departure_time, train_fare} = trainDetails;
         cost = train_fare * noOfPassengers;
-        new Booking(fromStationCode, toStationCode, noOfPassengers, trainId, userId, cost, arrival_time, departure_time)
+        new Booking(fromStationCode, toStationCode, noOfPassengers, trainId, userId, cost, arrival_time, departure_time, date)
         .then( () => {
           return DateTrain.updateSeats(date, noOfPassengers, trainId)
         })
