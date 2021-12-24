@@ -36,7 +36,7 @@ app.use((error, req, res, next) => {
   const errorStatus = error.statusCode || 500;
   const errorMessage = error.message;
   const errorData = error.data;
-  res.status(errorStatus).json({ message: errorMessage, data: errorData });
+  res.status(errorStatus).json({ message: errorMessage, data: errorData, status: errorStatus });
 });
 
 app.listen(process.env.PORT || 8080, createTablesMid);

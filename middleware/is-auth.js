@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
     try{
         decodedToken = jwt.verify(token, `${process.env.JWT_SECRET_KEY}`);
     } catch(err){
-        err.statusCode = 500;
+        err.statusCode = 501;
         err.message = 'Either the token or the secret key is wrong (may be the token has expired)!!!';
         throw err;
     }
