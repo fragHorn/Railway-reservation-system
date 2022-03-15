@@ -1,9 +1,8 @@
 const express = require("express");
-const trainRoutes = require("./routes/station");
-const bookingRoutes = require("./routes/booking");
+
 const authenticationRoutes = require("./routes/authentication");
-const createTablesMid = require('./middleware/createTables')
 const bodyParser = require("body-parser");
+const {mongoConnect} = require('./database/db');
 require('dotenv').config();
 
 //initialize the express app
@@ -20,8 +19,6 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 //define the routes...
 
-app.use(trainRoutes);
-app.use(bookingRoutes);
 app.use("/authentication", authenticationRoutes);
 app.use("/", (req, res, next) => {
   res.status(404).json({
@@ -39,4 +36,7 @@ app.use((error, req, res, next) => {
   res.status(errorStatus).json({ message: errorMessage, data: errorData, status: errorStatus });
 });
 
-app.listen(process.env.PORT || 8080, createTablesMid);
+mongoConnect(() => {
+  app.listen(process.env.PORT || 8080);
+});
+

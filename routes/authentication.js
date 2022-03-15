@@ -13,13 +13,13 @@ router.post(
       .isEmail()
       .withMessage("Please enter a valid email")
       .custom((value) => {
-        return User.findUser(value).then((user) => {
-            console.log(user);
-          if (user[0].length > 0)
+        const email = value;
+        return User.findUser(email).then((user) => {
+            console.log(user, email);
+          if (user)
             return Promise.reject("Email address already exists!");
         });
-      })
-      .normalizeEmail(),
+      }),
     body("password")
       .trim()
       .isLength({ min: 5 })

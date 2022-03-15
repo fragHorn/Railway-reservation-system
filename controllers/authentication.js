@@ -19,8 +19,9 @@ exports.postSignup = (req, res, next) => {
   bcryptjs
     .hash(password, 12)
     .then((hashedPassword) => {
-      new User(userEmail, hashedPassword, userName, userMobileNo)
-        .then(() => {
+      const user = new User(userEmail, hashedPassword, userName, userMobileNo);
+      user.save()
+        .then((u) => {
           res.status(201).json({
             message: "User created succesfully!!",
           });
@@ -41,14 +42,14 @@ exports.postLogin = (req, res, next) => {
   const password = req.body.password;
   let matchedUser;
   User.findUser(email)
-    .then(([user]) => {
-      if (user.length === 0) {
+    .then(user => {
+      if (!user) {
         const error = new Error("No such email id found!!!");
         error.statusCode = 401;
         throw error;
       }
-      [matchedUser] = user;
-      return bcryptjs.compare(password, user[0].password);
+      matchedUser = user;
+      return bcryptjs.compare(password, user.password);
     })
     .then((isCorrect) => {
       if (!isCorrect) {
@@ -58,13 +59,13 @@ exports.postLogin = (req, res, next) => {
       }
       const token = jwt.sign(
         {
-          emailId: matchedUser.email_id,
-          userId: matchedUser.id,
+          emailId: matchedUser.email,
+          userId: matchedUser._id,
         },
         `${process.env.JWT_SECRET_KEY}`,
         { expiresIn: "1h" }
       );
-      res.status(200).json({token: token, userId: matchedUser.id });
+      res.status(200).json({token: token, userId: matchedUser._id });
     })
     .catch((err) => {
       if (!err.statusCode) err.statusCode = 500;

@@ -1,17 +1,22 @@
-const db = require("../database/db");
+const { getDB } = require('../database/db');
 
-module.exports = class User {
-  constructor(emailId, password, name, mobileNo) {
-    return db.execute(`INSERT INTO users
-            (name, mobile_no, email_id, password)
-            values
-            ("${name}", "${mobileNo}", "${emailId}", "${password}");
-        `);
-  }
+module.exports = class User{
+    constructor(email, password, name, mobileNo){
+        this.name = name;
+        this.email = email;
+        this.mobileNo = mobileNo;
+        this.password = password;
+    };
 
-  static findUser(emailId) {
-    return db.execute(`SELECT * FROM users
-            where email_id = "${emailId}";
-        `);
-  }
-};
+    save(){
+        const db = getDB();
+        return db.collection('users').insertOne(this);
+    }
+    
+    static findUser(emailId){
+        const db = getDB();
+        return db.collection('users').findOne({
+                email: emailId
+        });
+    }
+}
